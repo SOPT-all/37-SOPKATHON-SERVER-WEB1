@@ -41,7 +41,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     // 테스트 컨테이너용 DB
     runtimeOnly 'com.h2database:h2'
-    // Swagger
+    // Swagger 의존성
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14'
 }
 
