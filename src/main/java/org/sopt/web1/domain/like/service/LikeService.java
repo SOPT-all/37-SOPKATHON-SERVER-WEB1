@@ -11,7 +11,6 @@ import org.sopt.web1.domain.video.service.VideoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +22,10 @@ public class LikeService {
 
     public int countLikeByVideoId(Video video) {
         return likeRepository.countLikeByVideo(video);
+    }
+
+    public boolean existsLikesByMemberAndVideo(Member member, Video video) {
+        return likeRepository.existsLikesByMemberAndVideo(member, video);
     }
 
     @Transactional
