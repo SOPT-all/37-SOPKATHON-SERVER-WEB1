@@ -43,13 +43,21 @@ public class Video extends SoftDeleteEntity {
         this.score = score;
         this.content = content;
         this.member = member;
+        this.likeCount = 0;
     }
 
     public void likeVideo(){
-        likeCount++;
+        if (this.likeCount == null) {
+            this.likeCount = 0; // Null 안전성 확보
+        }
+        this.likeCount++;
     }
 
     public void unlikeVideo(){
-        likeCount--;
+        if (this.likeCount == null || this.likeCount <= 0) {
+            this.likeCount = 0;
+            return;
+        }
+        this.likeCount--;
     }
 }
