@@ -22,6 +22,7 @@ public class VideoController {
 
     private final S3Uploader s3Uploader;
     private final AIAnalysisService aiAnalysisService;
+    private final VideoService videoService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<VideoAnalysisResponse>> uploadAndStartAnalysis(
@@ -48,5 +49,15 @@ public class VideoController {
 
         // 3. 클라이언트에게 성공 메시지 즉시 반환
         return ResponseEntity.ok(ApiResponse.ok(response, "영상 분석이 완료되었습니다."));
+    }
+
+    @DeleteMapping("/videos/{videoId}")
+    public ResponseEntity<ApiResponse<Void>> deleteVideo(
+            @RequestHeader(name = "memberId") Long memberId,
+            @PathVariable(name = "videoId") Long videoId
+    ){
+
+        videoService.deleteVideo(memberId, videoId);
+        return ResponseEntity.ok(ApiResponse.ok(null,"영상이 삭제되었습니다."));
     }
 }

@@ -13,6 +13,7 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, 40101, "비밀번호가 일치하지 않습니다."),
     NOT_FOUND_URL(HttpStatus.NOT_FOUND, 40401, "없는 URL 주소 입니다."),
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, 40402, "사용자를 찾을 수 없습니다."),
+    NOT_FOUND_VIDEO(HttpStatus.NOT_FOUND, 40403, "영상을 찾을 수 없습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 50001, "서버 내부 오류가 발생했습니다.");
 
     private final HttpStatus status;
