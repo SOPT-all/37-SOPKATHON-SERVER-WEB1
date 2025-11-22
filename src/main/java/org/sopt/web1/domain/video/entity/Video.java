@@ -30,9 +30,6 @@ public class Video extends SoftDeleteEntity {
     @Column(name = "content", length = 50)
     private String content;
 
-    @Column(name = "thumbnail_url", length = 1000)
-    private String thumbnailUrl;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

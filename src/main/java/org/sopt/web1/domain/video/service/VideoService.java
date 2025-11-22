@@ -41,10 +41,6 @@ public class VideoService {
 
         List<VideoProjection> rows = videoRepository.findAllSorted();
 
-        for (VideoProjection videoProjection : rows) {
-            System.out.println(videoProjection.getFinalScore());
-        }
-
         List<VideoFeedListResponse.VideoFeedItemResponse> items =
                 rows.stream()
                         .map(r -> new VideoFeedListResponse.VideoFeedItemResponse(
