@@ -34,9 +34,11 @@ public class LikeService {
 
         if (likeByMemberAndVideo.isPresent()) {
             likeRepository.delete(likeByMemberAndVideo.get());
+            video.unlikeVideo();
         } else {
             Like like = Like.builder().video(video).member(member).build();
             likeRepository.save(like);
+            video.likeVideo();
         }
     }
 }
