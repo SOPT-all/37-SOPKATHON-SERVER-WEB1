@@ -17,15 +17,25 @@ public class Member extends SoftDeleteEntity {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "nickname", unique = true, length = 20)
+    @Column(name = "nickname", unique = true, length = 255)
     private String nickname;
 
-    @Column(name = "password", length = 20)
+    @Column(name = "password", length = 255)
     private String password;
+
+    @Column(name = "image_url", length = 1000)
+    private String imageUrl;
 
     @Builder
     public Member(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
+    }
+
+    public static Member create(String nickname, String encodedPassword) {
+        return Member.builder()
+                .nickname(nickname)
+                .password(encodedPassword)
+                .build();
     }
 }
