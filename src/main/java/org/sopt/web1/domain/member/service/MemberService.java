@@ -1,16 +1,19 @@
 package org.sopt.web1.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.web1.domain.like.repository.LikeRepository;
 import org.sopt.web1.domain.member.dto.MemberLoginRequest;
 import org.sopt.web1.domain.member.dto.MemberLoginResponse;
+import org.sopt.web1.domain.member.dto.MyPageResponse;
 import org.sopt.web1.domain.member.entity.Member;
 import org.sopt.web1.domain.member.repository.MemberRepository;
+import org.sopt.web1.domain.video.repository.VideoRepository;
 import org.sopt.web1.global.exception.ErrorCode;
 import org.sopt.web1.global.exception.handler.MemberException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +22,8 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final VideoRepository videoRepository;
+    private final LikeRepository likeRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public Member getMember(Long memberId) {
@@ -48,5 +53,48 @@ public class MemberService {
         memberRepository.save(newMember);
 
         return MemberLoginResponse.of(newMember);
+    }
+
+    public MyPageResponse getMyPage(Long memberId, String type) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
+
+        List<MyPageResponse.MyPageVideoItem> result;
+
+        switch (type) {
+            case "my" -> result = getMyVideos(member);
+            case "like" -> result = getLikedVideos(member);
+            default -> throw new MemberException(ErrorCode.INVALID_REQUEST);
+        }
+
+
+        return MyPageResponse.of(member.getMemberId(), member.getNickname(), result);
+    }
+
+    private List<MyPageResponse.MyPageVideoItem> getMyVideos(Member member) {
+        return videoRepository.findByMember(member)
+                .stream()
+                .map(v -> MyPageResponse.MyPageVideoItem.of(
+                        member.getMemberId(),
+                        member.getNickname(),
+                        v.getVideoId(),
+                        v.getVideoUrl(),
+                        v.getThumbnailUrl(),
+                        likeRepository.countLikeByVideo(v)
+                )).toList();
+    }
+
+    private List<MyPageResponse.MyPageVideoItem> getLikedVideos(Member member) {
+        return likeRepository.findLikedVideos(member)
+                .stream()
+                .map(v -> MyPageResponse.MyPageVideoItem.of(
+                        v.getMember().getMemberId(),
+                        v.getMember().getNickname(),
+                        v.getVideoId(),
+                        v.getVideoUrl(),
+                        v.getThumbnailUrl(),
+                        likeRepository.countByVideo(v)
+                ))
+                .toList();
     }
 }
