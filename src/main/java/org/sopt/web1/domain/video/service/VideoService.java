@@ -76,4 +76,12 @@ public class VideoService {
         return new VideoResponse(member.getMemberId(), member.getNickname(),
                 video.getVideoUrl(), video.getThumbnailUrl(), likeCount, video.getContent(), video.getScore());
     }
+
+    // 내부 메서드
+    public Video getVideoByVideoId(Long videoId) {
+        Video video = videoRepository.findById(videoId)
+                .orElseThrow(() -> new VideoException(ErrorCode.NOT_FOUND_VIDEO));
+
+        return video;
+    }
 }

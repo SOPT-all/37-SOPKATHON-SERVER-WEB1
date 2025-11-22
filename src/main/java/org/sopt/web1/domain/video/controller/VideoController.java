@@ -3,6 +3,8 @@ package org.sopt.web1.domain.video.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.sopt.web1.domain.like.service.LikeFacade;
+import org.sopt.web1.domain.like.service.LikeService;
 import org.sopt.web1.domain.video.dto.VideoAnalysisResponse;
 import org.sopt.web1.domain.video.dto.VideoFeedListResponse;
 import org.sopt.web1.domain.video.dto.VideoResponse;
@@ -28,6 +30,7 @@ public class VideoController {
     private final S3Uploader s3Uploader;
     private final AIAnalysisService aiAnalysisService;
     private final VideoService videoService;
+    private final LikeFacade likeFacade;
 
     @PostMapping
     public ResponseEntity<ApiResponse<VideoAnalysisResponse>> uploadAndStartAnalysis(
@@ -88,5 +91,15 @@ public class VideoController {
 
         VideoResponse video = videoService.getVideo(videoId);
         return ResponseEntity.ok(ApiResponse.ok(video, "영상을 조회했습니다."));
+    }
+
+    @PostMapping("/videos/{videoId}/like")
+    public ResponseEntity<ApiResponse<Void>> likeVideo(
+            @RequestHeader(name = "memberId") Long memberId,
+            @PathVariable(name = "videoId") Long videoId
+    ){
+
+        likeFacade.likeVideo(memberId, videoId);
+        return ResponseEntity.ok(ApiResponse.ok(null, "좋아요 상태 변경이 완료되었습니다."));
     }
 }
