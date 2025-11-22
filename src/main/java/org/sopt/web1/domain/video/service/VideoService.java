@@ -1,7 +1,6 @@
 package org.sopt.web1.domain.video.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.web1.domain.like.repository.LikeRepository;
 import org.sopt.web1.domain.like.service.LikeService;
 import org.sopt.web1.domain.member.entity.Member;
 import org.sopt.web1.domain.video.dto.VideoFeedListResponse;
@@ -65,16 +64,26 @@ public class VideoService {
         videoRepository.delete(video);
     }
 
-    public VideoResponse getVideo(Long videoId) {
+    public VideoResponse getVideo(Long memberId, Long videoId) {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new VideoException(ErrorCode.NOT_FOUND_VIDEO));
 
         Member member = video.getMember();
+        Member loginedMember = memberService.getMember(memberId);
 
         int likeCount = likeService.countLikeByVideoId(video);
+        boolean isLiked = likeService.existsLikesByMemberAndVideo(loginedMember, video);
 
-        return new VideoResponse(member.getMemberId(), member.getNickname(),
-                video.getVideoUrl(), video.getThumbnailUrl(), likeCount, video.getContent(), video.getScore());
+        return new VideoResponse(
+                member.getMemberId(),
+                member.getNickname(),
+                video.getVideoUrl(),
+                video.getThumbnailUrl(),
+                isLiked,
+                likeCount,
+                video.getContent(),
+                video.getScore()
+        );
     }
 
     // 내부 메서드
