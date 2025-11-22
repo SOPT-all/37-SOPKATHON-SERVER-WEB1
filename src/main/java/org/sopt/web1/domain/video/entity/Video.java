@@ -21,6 +21,9 @@ public class Video extends SoftDeleteEntity {
     @Column(name = "video_url", length = 1000)
     private String videoUrl;
 
+    @Column(name = "thumbnail_url", length = 1000)
+    private String thumbnailUrl;
+
     @Column(name = "score")
     private Integer score;
 
