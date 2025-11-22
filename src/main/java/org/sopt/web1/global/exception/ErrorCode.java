@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
+    FILE_INPUT_ERROR(HttpStatus.BAD_REQUEST, 40001, "이미지 파일이 없습니다."),
+    FILE_TYPE_ERROR(HttpStatus.BAD_REQUEST, 40002, "동영상 타입만 입력 가능합니다."),
     NOT_FOUND_URL(HttpStatus.NOT_FOUND, 40401, "없는 URL 주소 입니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 50001, "서버 내부 오류가 발생했습니다.");
 

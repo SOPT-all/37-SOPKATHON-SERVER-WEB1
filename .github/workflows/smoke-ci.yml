@@ -50,6 +50,10 @@ jobs:
             -e SPRING_DATASOURCE_PASSWORD= \
             -e SPRING_JPA_HIBERNATE_DDL_AUTO=create \
             -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect \
+            -e CLOUD_AWS_REGION_STATIC="us-east-1" \
+            -e CLOUD_AWS_CREDENTIALS_ACCESS_KEY="DUMMY_KEY" \
+            -e CLOUD_AWS_CREDENTIALS_SECRET_KEY="DUMMY_SECRET" \
+            -e CLOUD_AWS_S3_BUCKET="dummy-bucket" \
             test-image
 
       # 6. 헬스 체크
