@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 모든 경로에 대해
-                .allowedOrigins("http://localhost:5173", "http://localhost:5174", "https://nvp.kr", "https://37-sopkathon-web-111.vercel.app") // 모든 출처 허용
+                .allowedOrigins("http://localhost:5173", "http://localhost:5174", "https://nvp.kr", "https://37-sopkathon-web-111.vercel.app", "https://37-sopkathon-web11.vercel.app") // 모든 출처 허용
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS") // 모든 메소드 허용
                 .allowedHeaders("*") // 모든 헤더 허용
                 .allowCredentials(false)
