@@ -1,4 +1,4 @@
-package org.sopt.web1.video.controller;
+package org.sopt.web1.domain.video.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.web1.domain.video.dto.VideoAnalysisResponse;
