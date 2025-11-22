@@ -1,4 +1,4 @@
-package org.sopt.web1.domain.analyze.entity;
+package org.sopt.web1.domain.video.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
