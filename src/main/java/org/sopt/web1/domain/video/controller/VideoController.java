@@ -74,7 +74,7 @@ public class VideoController {
         );
     }
 
-    @DeleteMapping("/videos/{videoId}")
+    @DeleteMapping("/{videoId}")
     public ResponseEntity<ApiResponse<Void>> deleteVideo(
             @RequestHeader(name = "memberId") Long memberId,
             @PathVariable(name = "videoId") Long videoId
@@ -84,7 +84,7 @@ public class VideoController {
         return ResponseEntity.ok(ApiResponse.ok(null,"영상이 삭제되었습니다."));
     }
 
-    @GetMapping("/videos/{videoId}")
+    @GetMapping("/{videoId}")
     public ResponseEntity<ApiResponse<VideoResponse>> getVideo(
             @RequestHeader(name = "memberId") Long memberId,
             @PathVariable(name = "videoId") Long videoId
@@ -94,7 +94,7 @@ public class VideoController {
         return ResponseEntity.ok(ApiResponse.ok(video, "영상을 조회했습니다."));
     }
 
-    @PostMapping("/videos/{videoId}/like")
+    @PostMapping("/{videoId}/like")
     public ResponseEntity<ApiResponse<Void>> likeVideo(
             @RequestHeader(name = "memberId") Long memberId,
             @PathVariable(name = "videoId") Long videoId

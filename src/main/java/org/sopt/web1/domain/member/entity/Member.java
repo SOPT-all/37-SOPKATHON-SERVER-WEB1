@@ -27,15 +27,17 @@ public class Member extends SoftDeleteEntity {
     private String imageUrl;
 
     @Builder
-    public Member(String nickname, String password) {
+    public Member(String nickname, String password, String imageUrl) {
         this.nickname = nickname;
         this.password = password;
+        this.imageUrl = imageUrl;
     }
 
-    public static Member create(String nickname, String encodedPassword) {
+    public static Member create(String nickname, String encodedPassword, String imageUrl) {
         return Member.builder()
                 .nickname(nickname)
                 .password(encodedPassword)
+                .imageUrl(imageUrl)
                 .build();
     }
 }
