@@ -54,6 +54,8 @@ jobs:
             -e CLOUD_AWS_CREDENTIALS_ACCESS_KEY="DUMMY_KEY" \
             -e CLOUD_AWS_CREDENTIALS_SECRET_KEY="DUMMY_SECRET" \
             -e CLOUD_AWS_S3_BUCKET="dummy-bucket" \
+            -e AI_OPENAI_BASE_URL="dummy-url" \
+            -e AI_OPENAI_API_KEY="dummy-apikey" \
             test-image
 
       # 6. 헬스 체크
