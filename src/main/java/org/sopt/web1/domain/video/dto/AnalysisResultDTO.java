@@ -16,5 +16,4 @@ public class AnalysisResultDTO {
     @JsonProperty("actualCrunchScoreY")
     private Double actualCrunchScoreY;
 
-    // Lombok을 사용하지 않을 경우, 기본 생성자와 getter/setter가 필요합니다.
 }
