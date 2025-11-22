@@ -20,6 +20,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private static final String MEMBER_PROFILE = "https://37-sopkathon-web1.s3.ap-northeast-2.amazonaws.com/profile.svg";
 
     public Member getMember(Long memberId) {
         return memberRepository.findById(memberId)
@@ -44,7 +45,7 @@ public class MemberService {
 
         // 2. 해당 닉네임을 가진 회원이 존재하지 않을 때
         String encodedPassword = passwordEncoder.encode(request.password());
-        Member newMember = Member.create(request.nickname(), encodedPassword);
+        Member newMember = Member.create(request.nickname(), encodedPassword, MEMBER_PROFILE);
         memberRepository.save(newMember);
 
         return MemberLoginResponse.of(newMember);
