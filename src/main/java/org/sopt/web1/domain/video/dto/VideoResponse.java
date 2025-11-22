@@ -5,6 +5,7 @@ public record VideoResponse(
         String nickname,
         String videoUrl,
         String thumbnailUrl,
+        Boolean isLiked,
         int likeCount,
         String content,
         int score

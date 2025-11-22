@@ -5,13 +5,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sopt.web1.domain.member.dto.MemberLoginRequest;
 import org.sopt.web1.domain.member.dto.MemberLoginResponse;
+import org.sopt.web1.domain.member.dto.MyPageResponse;
 import org.sopt.web1.domain.member.service.MemberService;
 import org.sopt.web1.global.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "회원 API", description = "회원 관련 API입니다.")
 @RestController
@@ -35,6 +33,24 @@ public class MemberController {
         MemberLoginResponse response = memberService.login(request);
         return ResponseEntity.ok(
                 ApiResponse.ok(response, "로그인에 성공했습니다.")
+        );
+    }
+
+    @Operation(
+            summary = "마이페이지 조회",
+            description = """
+            마이페이지 조회 API입니다.
+            """
+    )
+    @PostMapping("/mypage")
+    public ResponseEntity<ApiResponse<MyPageResponse>> getMyPage(
+            @RequestHeader("memberId") Long memberId,
+            @RequestParam String type
+    ) {
+        MyPageResponse response = memberService.getMyPage(memberId, type);
+
+        return ResponseEntity.ok(
+                ApiResponse.ok(response, "마이페이지 조회에 성공했습니다.")
         );
     }
 }

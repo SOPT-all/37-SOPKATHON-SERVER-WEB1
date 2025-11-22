@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sopt.web1.domain.like.service.LikeFacade;
-import org.sopt.web1.domain.like.service.LikeService;
 import org.sopt.web1.domain.video.dto.VideoAnalysisResponse;
 import org.sopt.web1.domain.video.dto.VideoFeedListResponse;
 import org.sopt.web1.domain.video.dto.VideoResponse;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Tag(name = "영상 API", description = "영상 관련 API 입니다.")
 @RestController
@@ -87,9 +85,12 @@ public class VideoController {
     }
 
     @GetMapping("/{videoId}")
-    public ResponseEntity<ApiResponse<VideoResponse>> getVideo(@PathVariable(name = "videoId") Long videoId){
+    public ResponseEntity<ApiResponse<VideoResponse>> getVideo(
+            @RequestHeader(name = "memberId") Long memberId,
+            @PathVariable(name = "videoId") Long videoId
+    ){
 
-        VideoResponse video = videoService.getVideo(videoId);
+        VideoResponse video = videoService.getVideo(memberId, videoId);
         return ResponseEntity.ok(ApiResponse.ok(video, "영상을 조회했습니다."));
     }
 
