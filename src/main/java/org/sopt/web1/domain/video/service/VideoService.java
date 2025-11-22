@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.web1.domain.like.repository.LikeRepository;
 import org.sopt.web1.domain.like.service.LikeService;
 import org.sopt.web1.domain.member.entity.Member;
+import org.sopt.web1.domain.video.dto.VideoFeedListResponse;
+import org.sopt.web1.domain.video.dto.VideoProjection;
 import org.sopt.web1.domain.member.service.MemberService;
 import org.sopt.web1.domain.video.dto.VideoResponse;
 import org.sopt.web1.domain.video.entity.Video;
@@ -12,6 +14,8 @@ import org.sopt.web1.global.exception.ErrorCode;
 import org.sopt.web1.global.exception.handler.VideoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,24 @@ public class VideoService {
                 .content(content)
                 .member(member)
                 .build());
+    }
+
+    public VideoFeedListResponse getFeedVideos() {
+
+        List<VideoProjection> rows = videoRepository.findAllSorted();
+
+        List<VideoFeedListResponse.VideoFeedItemResponse> items =
+                rows.stream()
+                        .map(r -> new VideoFeedListResponse.VideoFeedItemResponse(
+                                r.getMemberId(),
+                                r.getNickname(),
+                                r.getVideoId(),
+                                r.getThumbnailUrl(),
+                                r.getLikeCount()
+                        ))
+                        .toList();
+
+        return new VideoFeedListResponse(items);
     }
 
     @Transactional

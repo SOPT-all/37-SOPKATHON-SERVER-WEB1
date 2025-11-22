@@ -1,9 +1,12 @@
-package org.sopt.web1.video.controller;
+package org.sopt.web1.domain.video.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sopt.web1.domain.like.service.LikeFacade;
 import org.sopt.web1.domain.like.service.LikeService;
 import org.sopt.web1.domain.video.dto.VideoAnalysisResponse;
+import org.sopt.web1.domain.video.dto.VideoFeedListResponse;
 import org.sopt.web1.domain.video.dto.VideoResponse;
 import org.sopt.web1.domain.video.service.AIAnalysisService;
 import org.sopt.web1.domain.video.service.VideoService;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@Tag(name = "영상 API", description = "영상 관련 API 입니다.")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/videos")
@@ -53,6 +57,23 @@ public class VideoController {
 
         // 3. 클라이언트에게 성공 메시지 즉시 반환
         return ResponseEntity.ok(ApiResponse.ok(response, "영상 분석이 완료되었습니다."));
+    }
+
+    @Operation(
+            summary = "홈피드 조회",
+            description = """
+            홈피드 조회 API입니다.
+            - RequestParam으로 cursor와 size을 전달합니다.
+            - 좋아요 순으로
+            """
+    )
+    @GetMapping("/feed")
+    public ResponseEntity<ApiResponse<VideoFeedListResponse>> getFeedVideos(
+    ) {
+        VideoFeedListResponse response = videoService.getFeedVideos();
+        return ResponseEntity.ok(
+                ApiResponse.ok(response, "피드가 조회되었습니다.")
+        );
     }
 
     @DeleteMapping("/videos/{videoId}")
