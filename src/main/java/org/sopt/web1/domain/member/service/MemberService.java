@@ -21,7 +21,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @Transactional
     public Member getMember(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
