@@ -30,6 +30,9 @@ public class Video extends SoftDeleteEntity {
     @Column(name = "content", length = 50)
     private String content;
 
+    @Column(name = "like_count")
+    private Integer likeCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -40,5 +43,13 @@ public class Video extends SoftDeleteEntity {
         this.score = score;
         this.content = content;
         this.member = member;
+    }
+
+    public void likeVideo(){
+        likeCount++;
+    }
+
+    public void unlikeVideo(){
+        likeCount--;
     }
 }
